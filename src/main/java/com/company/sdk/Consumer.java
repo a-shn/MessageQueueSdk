@@ -11,11 +11,23 @@ public class Consumer {
     private final Connector connector;
     private MessageHandlerWrap<?> handler;
     private final ObjectMapper objectMapper;
+    private final Thread sleepingThread;
 
     public <T> Consumer(Connector connector, Class<? extends T> messageClass, MessageHandler<T> handler) {
         this.connector = connector;
         this.handler = new MessageHandlerWrap<T>(messageClass, handler);
         objectMapper = new ObjectMapper();
+
+        sleepingThread = new Thread(() -> {
+            Object lock = new Object();
+            synchronized (lock) {
+                try {
+                    lock.wait();
+                } catch (InterruptedException e) {
+                }
+            }
+        });
+        sleepingThread.start();
     }
 
     void handle(String message) {

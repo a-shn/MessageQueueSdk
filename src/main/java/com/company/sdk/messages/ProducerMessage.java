@@ -2,20 +2,24 @@ package com.company.sdk.messages;
 
 
 public class ProducerMessage {
-    private String queueName;
+    private String queue;
     private Object body;
 
-    public ProducerMessage(String queueName, Object body) {
-        this.queueName = queueName;
+    public ProducerMessage(String queue, Object body) {
+        this.queue = queue;
         this.body = body;
     }
 
-    public String getQueueName() {
-        return queueName;
+    public String getQueue() {
+        return queue;
     }
 
-    public void setQueueName(String queueName) {
-        this.queueName = queueName;
+    public void setQueueName(String queue) {
+        this.queue = queue;
+    }
+
+    public String getCommand() {
+        return "send";
     }
 
     public Object getBody() {

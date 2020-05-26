@@ -2,6 +2,7 @@ package com.company.sdk.handlers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 
 public class MessageHandlerWrap<T> implements MessageHandler<JsonNode>{
     private final Class<? extends T> messageClass;
@@ -14,6 +15,7 @@ public class MessageHandlerWrap<T> implements MessageHandler<JsonNode>{
         objectMapper = new ObjectMapper();
     }
 
+    @SneakyThrows
     @Override
     public void handle(JsonNode body) {
         handler.handle(objectMapper.convertValue(body, messageClass));
